@@ -17,7 +17,10 @@ class BasePage():
             raise AssertionError("Wrong title")
 
     def wait_clickable(self, locator):
-        element = WebDriverWait(self.browser, timeout=4).until(EC.element_to_be_clickable(locator))
+        try:
+            element = WebDriverWait(self.browser, timeout=4).until(EC.element_to_be_clickable(locator))
+        except TimeoutException:
+            raise AssertionError(f"element with locator {locator} not found")
         return element
 
     def enter_data(self, locator, data):
@@ -31,8 +34,14 @@ class BasePage():
         except TimeoutException: raise AssertionError(f"element {locator} not found")
         return element
 
+    def wait_elements(self, locator):
+        elements = WebDriverWait(self.browser, timeout=4).until(EC.visibility_of_all_elements_located(locator))
+        return elements
     def switch_to_main_frame(self):
         # Switch to original window back
         self.browser.switch_to.default_content()
 
+    def set_dropdawn(self, dropdown_locator, xpath_template, text):
+        self.wait_clickable(dropdown_locator).click()
+        self.wait_clickable((xpath_template[0], xpath_template[1].format(text))).click()
 

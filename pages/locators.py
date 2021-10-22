@@ -17,4 +17,12 @@ class HomePageLocators:
     BUTTON_FRAME = (By.ID, "frame-button")
     LIST_BUTTONS_LEFT_BAR = [(By.CSS_SELECTOR, f"#mCSB_1_container #mCSB_1_container  >.left > li:nth-child({i+1})")
                              for i in range(5)]
+    BUTTON_DIFFERENT_ELEMENTS = (By.CSS_SELECTOR, ".dropdown-menu [href='different-elements.html']")
 
+class DiffElementsPageLocators:
+    CHECKBOX_WATER = (By.CSS_SELECTOR, ".main-content-hg > .checkbox-row:nth-child(2) > .label-checkbox:nth-child(1) ")
+    CHECKBOX_WIND = (By.CSS_SELECTOR, ".main-content-hg > .checkbox-row:nth-child(2) > .label-checkbox:nth-child(3) ")
+    RADIOBUTTON_SELEN = (By.CSS_SELECTOR, ".main-content-hg > .checkbox-row:nth-child(3) > .label-radio:nth-child(4) ")
+    DROPDOWN_COLORS = (By.CSS_SELECTOR, ".page-inside .uui-form-element")
+    DROPDOWN_COLOR_TEMPLATE_VALUE = (By.XPATH, "//select/option[text()='{}']")
+    LOG_ENTRIES = (By.CSS_SELECTOR, ".info-panel-body-log .logs li")

@@ -51,5 +51,8 @@ class HomePage(BasePage):
         self.browser.switch_to.frame(self.wait_visible(HomePageLocators.FRAME_CARD))
         self.wait_clickable(HomePageLocators.BUTTON_FRAME)
 
+    def go_to_diff_elements_page(self):
+        self.wait_clickable(HomePageLocators.DROPDOWN_HEADER_SERVICE).click()
+        self.wait_clickable(HomePageLocators.BUTTON_DIFFERENT_ELEMENTS).click()
 
 
