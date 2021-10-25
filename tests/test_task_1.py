@@ -1,14 +1,15 @@
 from pages.home_page import HomePage
 from pages.diff_elements_page import DiffElementsPage
 from delayed_assert import delayed_assert, expect
+from tests.users import LOGIN, PASSWORD, USERNAME, URL
 
 
 def first_4_steps(browser):
     page = HomePage(browser)
-    page.open_url('https://jdi-testing.github.io/jdi-light/index.html')
+    page.open_url(URL)
     page.wait_title("Home Page")
-    page.should_be_login('Roman', 'Jdi1234')
-    expect(page.should_be_right_username() == "ROMAN IOVLEV")
+    page.should_be_login(LOGIN, PASSWORD)
+    expect(page.should_be_right_username() == USERNAME)
     return page
 
 

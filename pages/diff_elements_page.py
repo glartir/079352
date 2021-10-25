@@ -12,7 +12,7 @@ class DiffElementsPage(BasePage):
         self.wait_clickable(DiffElementsPageLocators.RADIOBUTTON_SELEN).click()
 
     def select_in_dropdown(self, color):
-        dropdown = self.set_dropdown_html(DiffElementsPageLocators.DROPDOWN_COLORS, color)
+        self.set_dropdown_html(DiffElementsPageLocators.DROPDOWN_COLORS, color)
 
     def check_values(self):
 
