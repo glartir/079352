@@ -1,6 +1,6 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.chrome.options import Options
 import allure
 
 
@@ -15,14 +15,14 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture
 def browser(request):
     # options = Options()
-    # options.add_argument("--start-maximized")  # open Browser in maximized mode
-    # options.add_argument("--no-sandbox")  # bypass OS security model
+    # options.add_argument("--start-maximized")
+    # options.add_argument("--no-sandbox")
     # options.add_argument('--disable-dev-shm-usage')
-
+    # browser = webdriver.Chrome(options=options, ")
     capabilities = {
         "browserName": "chrome",
         "browserVersion": "95",
-        "screenResolution":"1920x1080x24",
+        "screenResolution": "1920x1080x24",
         "selenoid:options": {
             "enableVNC": True,
             "enableVideo": False
@@ -33,7 +33,6 @@ def browser(request):
     browser = webdriver.Remote(
         command_executor="http://localhost:4444/wd/hub", desired_capabilities=capabilities)
     browser.maximize_window()
-    # browser = webdriver.Chrome(options=options, executable_path="../chromedriver")
     yield browser
     if request.node.rep_call.failed:
         allure.attach(browser.get_screenshot_as_png(),
