@@ -8,6 +8,7 @@ def browser():
     options = Options()
     options.add_argument("--start-maximized")  # open Browser in maximized mode
     options.add_argument("--no-sandbox")  # bypass OS security model
+    options.add_argument("--headless")
     browser = webdriver.Chrome(options=options, executable_path="/home/viacheslav_sidorenko/PycharmProjects/079352/chromedriver")
     # browser.maximize_window()
     yield browser
