@@ -14,6 +14,11 @@ def browser():
 def pytest_configure(config):
     config.addinivalue_line("markers", "high: marks high priority operation")
     config.addinivalue_line("markers", "low: marks low  priority operation")
+    config.addinivalue_line("markers", "add: marks add operation")
+    config.addinivalue_line("markers", "subtract: marks subtract operation")
+    config.addinivalue_line("markers", "multiply: marks multiply operation")
+    config.addinivalue_line("markers", "devide: marks devide operation")
+
 
 
 def pytest_addoption(parser):
