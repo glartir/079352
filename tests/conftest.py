@@ -4,6 +4,10 @@ from selenium import webdriver
 import allure
 
 
+def pytest_addoption(parser):
+    parser.addoption('--driver_type', action='store', default='local',
+                     help="Choose type of driver: local or remote")
+
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
 def pytest_runtest_makereport(item, call):
@@ -15,24 +19,25 @@ def pytest_runtest_makereport(item, call):
 
 @pytest.fixture
 def browser(request):
-    # options = Options()
-    # options.add_argument("--start-maximized")
-    # options.add_argument("--no-sandbox")
-    # options.add_argument('--disable-dev-shm-usage')
-    # browser = webdriver.Chrome(options=options, ")
-    capabilities = {
-        "browserName": "chrome",
-        "browserVersion": "95",
-        "screenResolution": "1920x1080x24",
-        "selenoid:options": {
-            "enableVNC": True,
-            "enableVideo": False
+    driver_type = request.config.getoption("driver_type")
+    if driver_type == "local":
+        browser = webdriver.Chrome()
+    elif driver_type == "remote":
+        capabilities = {
+            "browserName": "chrome",
+            "browserVersion": "95",
+            "screenResolution": "1920x1080x24",
+            "selenoid:options": {
+                "enableVNC": True,
+                "enableVideo": False
+            }
+
         }
 
-    }
-
-    browser = webdriver.Remote(
-        command_executor="http://localhost:4444/wd/hub", desired_capabilities=capabilities)
+        browser = webdriver.Remote(
+            command_executor="http://localhost:4444/wd/hub", desired_capabilities=capabilities)
+    else:
+        raise pytest.UsageError("--driver_type should be local or remote")
     browser.maximize_window()
     yield browser
     if request.node.rep_call.failed:
