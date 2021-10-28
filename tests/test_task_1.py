@@ -15,7 +15,7 @@ def first_4_steps(browser):
     return page
 
 
-@allure.title("Jdi page suite")
+@allure.suite('Jdi page suite')
 class TestSelenium:
     @allure.title("Check login & iframe")
     @allure.description(""" Check auth, iframe, exist pictures and text below:
@@ -48,45 +48,42 @@ class TestSelenium:
         page.select_checkboxes()
         page.select_radio()
         page.select_in_dropdown("Yellow")
-        with allure.step("Assert that dropdown and radio button and checkboxes match their values"):
-            water, wind, drop, selen = page.check_values()
-            expect(water.text == "Water", f"Water != {water.text}")
-            expect(wind.text == "Wind", f"wind != {wind.text}")
-            expect(selen.text == "Selen", f"Selen != {selen.text}")
-            expect(drop.get_attribute('value') == "Yellow", f"Yellow != {drop.get_attribute('value')}")
-            expect(water.find_element_by_xpath("./input").is_selected())
-            expect(wind.find_element_by_xpath("./input").is_selected())
-            expect(selen.find_element_by_xpath("./input").is_selected())
-        with allure.step("Assert that rows log row value is corresponded to the selected value"):
-            log = page.check_log()
-            expect(log[0] == ['Colors:', 'Yellow'])
-            expect(log[1] == ['metal:', 'Selen'])
-            expect(log[2] == ['Wind:', 'true'])
-            expect(log[3] == ['Water:', 'true'])
+
+        water, wind, drop, selen = page.check_values()
+        expect(water.text == "Water", f"Water != {water.text}")
+        expect(wind.text == "Wind", f"wind != {wind.text}")
+        expect(selen.text == "Selen", f"Selen != {selen.text}")
+        expect(drop.get_attribute('value') == "Yellow", f"Yellow != {drop.get_attribute('value')}")
+        expect(water.find_element_by_xpath("./input").is_selected())
+        expect(wind.find_element_by_xpath("./input").is_selected())
+        expect(selen.find_element_by_xpath("./input").is_selected())
+
+        log = page.check_log()
+        expect(log[0] == ['Colors:', 'Yellow'])
+        expect(log[1] == ['metal:', 'Selen'])
+        expect(log[2] == ['Wind:', 'true'])
+        expect(log[3] == ['Water:', 'true'])
 
     @allure.title("Check make_screenshot when test fail")
     @allure.description("Changed ex2 for fail, check added screenshot")
     @delayed_assert.assert_all()
     def test_exercise2_fail(self, browser):
         page = first_4_steps(browser)
-
         page.go_to_diff_elements_page()
         page = DiffElementsPage(browser)
         page.select_checkboxes()
         page.select_radio()
         page.select_in_dropdown("Red")
-        with allure.step("Assert that dropdown and radio button and checkboxes match their values"):
-            water, wind, drop, selen = page.check_values()
-            expect(water.text == "Water", f"Water != {water.text}")
-            expect(wind.text == "Wind", f"wind != {wind.text}")
-            expect(selen.text == "Selen", f"Selen != {selen.text}")
-            expect(drop.get_attribute('value') == "Yellow", f"Yellow != {drop.get_attribute('value')}")
-            expect(water.find_element_by_xpath("./input").is_selected())
-            expect(wind.find_element_by_xpath("./input").is_selected())
-            expect(selen.find_element_by_xpath("./input").is_selected())
-        with allure.step("Assert that rows log row value is corresponded to the selected value"):
-            log = page.check_log()
-            expect(log[0] == ['Colors:', 'Yellow'])
-            expect(log[1] == ['metal:', 'Selen'])
-            expect(log[2] == ['Wind:', 'true'])
-            expect(log[3] == ['Water:', 'true'])
+        water, wind, drop, selen = page.check_values()
+        expect(water.text == "Water", f"Water != {water.text}")
+        expect(wind.text == "Wind", f"wind != {wind.text}")
+        expect(selen.text == "Selen", f"Selen != {selen.text}")
+        expect(drop.get_attribute('value') == "Yellow", f"Yellow != {drop.get_attribute('value')}")
+        expect(water.find_element_by_xpath("./input").is_selected())
+        expect(wind.find_element_by_xpath("./input").is_selected())
+        expect(selen.find_element_by_xpath("./input").is_selected())
+        log = page.check_log()
+        expect(log[0] == ['Colors:', 'Yellow'])
+        expect(log[1] == ['metal:', 'Selen'])
+        expect(log[2] == ['Wind:', 'true'])
+        expect(log[3] == ['Water:', 'true'])

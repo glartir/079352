@@ -4,22 +4,21 @@ import allure
 
 
 class DiffElementsPage(BasePage):
-
+    @allure.step("Select checkboxes")
     def select_checkboxes(self):
-        with allure.step("Select checkboxes "):
-            self.wait_clickable(DiffElementsPageLocators.CHECKBOX_WATER).click()
-            self.wait_clickable(DiffElementsPageLocators.CHECKBOX_WIND).click()
+        self.wait_clickable(DiffElementsPageLocators.CHECKBOX_WATER).click()
+        self.wait_clickable(DiffElementsPageLocators.CHECKBOX_WIND).click()
 
+    @allure.step("Select radio")
     def select_radio(self):
-        with allure.step("Select radio "):
-            self.wait_clickable(DiffElementsPageLocators.RADIOBUTTON_SELEN).click()
+        self.wait_clickable(DiffElementsPageLocators.RADIOBUTTON_SELEN).click()
 
+    @allure.step("Select in dropdown")
     def select_in_dropdown(self, color):
-        with allure.step("Select in dropdown "):
-            self.set_dropdown_html(DiffElementsPageLocators.DROPDOWN_COLORS, color)
+        self.set_dropdown_html(DiffElementsPageLocators.DROPDOWN_COLORS, color)
 
+    @allure.step("Get dropdown and radio button and checkboxes for assert  their values")
     def check_values(self):
-
         # Assert that ...
         water = self.wait_clickable(DiffElementsPageLocators.CHECKBOX_WATER)
         wind = self.wait_clickable(DiffElementsPageLocators.CHECKBOX_WIND)
@@ -27,6 +26,7 @@ class DiffElementsPage(BasePage):
         selen = self.wait_clickable(DiffElementsPageLocators.RADIOBUTTON_SELEN)
         return water, wind, drop, selen
 
+    @allure.step("Get  rows log row value is for assert corresponded to the selected value")
     def check_log(self):
         log = self.wait_elements(DiffElementsPageLocators.LOG_ENTRIES)
         log_text = [[i.text.split()[1], i.text.split()[-1]] for i in log]
