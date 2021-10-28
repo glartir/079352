@@ -1,5 +1,5 @@
 import pytest
-# /079352/tests$ pytest --first_arg=10 --second_arg=20 --result=6 test_calc.py
+# pytest --first_arg=10 --second_arg=20 --result=6 tests/test_calc.py
 # pytest -m high --first_arg=10
 
 
