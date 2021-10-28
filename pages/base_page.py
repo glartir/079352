@@ -3,6 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from pages.locators import BasePageLocators
 from selenium.webdriver.support.ui import Select
+import allure
 
 TIMEOUT = 4
 
@@ -13,14 +14,17 @@ class BasePage:
         self.browser = browser
 
     def open_url(self, url):
-        self.browser.get(url)
+        with allure.step("Open test site by URL "):
+            self.browser.get(url)
 
     def wait_title(self, title):
+
         # Assert Browser title
-        try:
-            WebDriverWait(self.browser, timeout=TIMEOUT).until(EC.title_is(title))
-        except TimeoutException:
-            raise AssertionError("Wrong title")
+        with allure.step("Assert Browser title "):
+            try:
+                WebDriverWait(self.browser, timeout=TIMEOUT).until(EC.title_is(title))
+            except TimeoutException:
+                raise AssertionError("Wrong title")
 
     def wait_clickable(self, locator):
         try:
@@ -47,7 +51,8 @@ class BasePage:
 
     def switch_to_main_frame(self):
         # Switch to original window back
-        self.browser.switch_to.default_content()
+        with allure.step("Switch to original window back "):
+            self.browser.switch_to.default_content()
 
     def set_dropdown_html(self, dropdown_locator, text):
         dropdown = self.wait_clickable(dropdown_locator)
@@ -56,29 +61,35 @@ class BasePage:
 
     def should_be_right_header(self):
         # Assert that there are 4 items on the header section are displayed and they have proper texts
-        text_home = self.wait_clickable(BasePageLocators.BUTTON_HEADER_HOME).text
-        text_contact = self.wait_clickable(BasePageLocators.BUTTON_HEADER_CONTACT).text
-        text_metal = self.wait_clickable(BasePageLocators.BUTTON_HEADER_METALS_COLORS).text
-        text_service = self.wait_clickable(BasePageLocators.DROPDOWN_HEADER_SERVICE).text
-        return [text_home, text_metal, text_contact, text_service]
+        with allure.step(
+                "Assert that there are 4 items on the header section are displayed and they have proper texts "):
+            text_home = self.wait_clickable(BasePageLocators.BUTTON_HEADER_HOME).text
+            text_contact = self.wait_clickable(BasePageLocators.BUTTON_HEADER_CONTACT).text
+            text_metal = self.wait_clickable(BasePageLocators.BUTTON_HEADER_METALS_COLORS).text
+            text_service = self.wait_clickable(BasePageLocators.DROPDOWN_HEADER_SERVICE).text
+            return [text_home, text_metal, text_contact, text_service]
 
     def should_be_login(self, login, password):
         # Perform login
-        self.wait_clickable(BasePageLocators.BUTTON_LOGIN_FORM).click()
-        self.enter_data(BasePageLocators.INPUT_LOGIN, login)
-        self.enter_data(BasePageLocators.INPUT_PASSWORD, password)
-        self.wait_clickable(BasePageLocators.BUTTON_GO_TO_LOGIN).click()
+        with allure.step("Perform login "):
+            self.wait_clickable(BasePageLocators.BUTTON_LOGIN_FORM).click()
+            self.enter_data(BasePageLocators.INPUT_LOGIN, login)
+            self.enter_data(BasePageLocators.INPUT_PASSWORD, password)
+            self.wait_clickable(BasePageLocators.BUTTON_GO_TO_LOGIN).click()
 
     def should_be_right_username(self):
         # Assert Username is loggined
-        username = self.wait_visible(BasePageLocators.USERNAME).text
-        return username
+        with allure.step("Assert Username is loggined "):
+            username = self.wait_visible(BasePageLocators.USERNAME).text
+            return username
 
     def go_to_diff_elements_page(self):
-        self.wait_clickable(BasePageLocators.DROPDOWN_HEADER_SERVICE).click()
-        self.wait_clickable(BasePageLocators.BUTTON_DIFFERENT_ELEMENTS).click()
+        with allure.step("Open through the header menu Service -> Different Elements Page "):
+            self.wait_clickable(BasePageLocators.DROPDOWN_HEADER_SERVICE).click()
+            self.wait_clickable(BasePageLocators.BUTTON_DIFFERENT_ELEMENTS).click()
 
     def should_be_5_items(self):
         # Assert that there are 5 items in the Left Section are displayed and they have proper text
-        elements_text = list(map(lambda x: self.wait_visible(x).text, BasePageLocators.LIST_BUTTONS_LEFT_BAR))
-        return elements_text
+        with allure.step("Assert that there are 5 items in the Left Section are displayed and they have proper text "):
+            elements_text = list(map(lambda x: self.wait_visible(x).text, BasePageLocators.LIST_BUTTONS_LEFT_BAR))
+            return elements_text

@@ -4,6 +4,7 @@ from selenium import webdriver
 import allure
 
 
+
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield

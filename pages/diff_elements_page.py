@@ -1,18 +1,22 @@
 from pages.base_page import BasePage
 from pages.locators import DiffElementsPageLocators
+import allure
 
 
 class DiffElementsPage(BasePage):
 
     def select_checkboxes(self):
-        self.wait_clickable(DiffElementsPageLocators.CHECKBOX_WATER).click()
-        self.wait_clickable(DiffElementsPageLocators.CHECKBOX_WIND).click()
+        with allure.step("Select checkboxes "):
+            self.wait_clickable(DiffElementsPageLocators.CHECKBOX_WATER).click()
+            self.wait_clickable(DiffElementsPageLocators.CHECKBOX_WIND).click()
 
     def select_radio(self):
-        self.wait_clickable(DiffElementsPageLocators.RADIOBUTTON_SELEN).click()
+        with allure.step("Select radio "):
+            self.wait_clickable(DiffElementsPageLocators.RADIOBUTTON_SELEN).click()
 
     def select_in_dropdown(self, color):
-        self.set_dropdown_html(DiffElementsPageLocators.DROPDOWN_COLORS, color)
+        with allure.step("Select in dropdown "):
+            self.set_dropdown_html(DiffElementsPageLocators.DROPDOWN_COLORS, color)
 
     def check_values(self):
 
