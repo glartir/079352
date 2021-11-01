@@ -3,6 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from pages.locators import BasePageLocators
 from selenium.webdriver.support.ui import Select
+import allure
 
 TIMEOUT = 4
 
@@ -12,9 +13,11 @@ class BasePage:
     def __init__(self, browser):
         self.browser = browser
 
+    @allure.step("Open test site by URL ")
     def open_url(self, url):
         self.browser.get(url)
 
+    @allure.step("Assert Browser title ")
     def wait_title(self, title):
         # Assert Browser title
         try:
@@ -45,6 +48,7 @@ class BasePage:
         elements = WebDriverWait(self.browser, timeout=TIMEOUT).until(EC.visibility_of_all_elements_located(locator))
         return elements
 
+    @allure.step("Switch to original window back ")
     def switch_to_main_frame(self):
         # Switch to original window back
         self.browser.switch_to.default_content()
@@ -54,6 +58,7 @@ class BasePage:
         Select(dropdown).select_by_visible_text(text)
         return dropdown
 
+    @allure.step("Assert that there are 4 items on the header section are displayed and they have proper texts ")
     def should_be_right_header(self):
         # Assert that there are 4 items on the header section are displayed and they have proper texts
         text_home = self.wait_clickable(BasePageLocators.BUTTON_HEADER_HOME).text
@@ -62,6 +67,7 @@ class BasePage:
         text_service = self.wait_clickable(BasePageLocators.DROPDOWN_HEADER_SERVICE).text
         return [text_home, text_metal, text_contact, text_service]
 
+    @allure.step("Perform login ")
     def should_be_login(self, login, password):
         # Perform login
         self.wait_clickable(BasePageLocators.BUTTON_LOGIN_FORM).click()
@@ -69,15 +75,18 @@ class BasePage:
         self.enter_data(BasePageLocators.INPUT_PASSWORD, password)
         self.wait_clickable(BasePageLocators.BUTTON_GO_TO_LOGIN).click()
 
+    @allure.step("Assert Username is loggined ")
     def should_be_right_username(self):
         # Assert Username is loggined
         username = self.wait_visible(BasePageLocators.USERNAME).text
         return username
 
+    @allure.step("Open through the header menu Service -> Different Elements Page ")
     def go_to_diff_elements_page(self):
         self.wait_clickable(BasePageLocators.DROPDOWN_HEADER_SERVICE).click()
         self.wait_clickable(BasePageLocators.BUTTON_DIFFERENT_ELEMENTS).click()
 
+    @allure.step("Assert that there are 5 items in the Left Section are displayed and they have proper text ")
     def should_be_5_items(self):
         # Assert that there are 5 items in the Left Section are displayed and they have proper text
         elements_text = list(map(lambda x: self.wait_visible(x).text, BasePageLocators.LIST_BUTTONS_LEFT_BAR))
