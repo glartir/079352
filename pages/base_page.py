@@ -59,37 +59,37 @@ class BasePage:
         Select(dropdown).select_by_visible_text(text)
         return dropdown
 
+    @allure.step("Assert that there are 4 items on the header section are displayed and they have proper texts "):
     def should_be_right_header(self):
         # Assert that there are 4 items on the header section are displayed and they have proper texts
-        with allure.step(
-                "Assert that there are 4 items on the header section are displayed and they have proper texts "):
+
             text_home = self.wait_clickable(BasePageLocators.BUTTON_HEADER_HOME).text
             text_contact = self.wait_clickable(BasePageLocators.BUTTON_HEADER_CONTACT).text
             text_metal = self.wait_clickable(BasePageLocators.BUTTON_HEADER_METALS_COLORS).text
             text_service = self.wait_clickable(BasePageLocators.DROPDOWN_HEADER_SERVICE).text
             return [text_home, text_metal, text_contact, text_service]
 
+    @allure.step("Perform login ")
     def should_be_login(self, login, password):
         # Perform login
-        with allure.step("Perform login "):
-            self.wait_clickable(BasePageLocators.BUTTON_LOGIN_FORM).click()
-            self.enter_data(BasePageLocators.INPUT_LOGIN, login)
-            self.enter_data(BasePageLocators.INPUT_PASSWORD, password)
-            self.wait_clickable(BasePageLocators.BUTTON_GO_TO_LOGIN).click()
+        self.wait_clickable(BasePageLocators.BUTTON_LOGIN_FORM).click()
+        self.enter_data(BasePageLocators.INPUT_LOGIN, login)
+        self.enter_data(BasePageLocators.INPUT_PASSWORD, password)
+        self.wait_clickable(BasePageLocators.BUTTON_GO_TO_LOGIN).click()
 
+    @allure.step("Assert Username is loggined ")
     def should_be_right_username(self):
         # Assert Username is loggined
-        with allure.step("Assert Username is loggined "):
-            username = self.wait_visible(BasePageLocators.USERNAME).text
-            return username
+        username = self.wait_visible(BasePageLocators.USERNAME).text
+        return username
 
+    @allure.step("Open through the header menu Service -> Different Elements Page ")
     def go_to_diff_elements_page(self):
-        with allure.step("Open through the header menu Service -> Different Elements Page "):
-            self.wait_clickable(BasePageLocators.DROPDOWN_HEADER_SERVICE).click()
-            self.wait_clickable(BasePageLocators.BUTTON_DIFFERENT_ELEMENTS).click()
+        self.wait_clickable(BasePageLocators.DROPDOWN_HEADER_SERVICE).click()
+        self.wait_clickable(BasePageLocators.BUTTON_DIFFERENT_ELEMENTS).click()
 
+    @allure.step("Assert that there are 5 items in the Left Section are displayed and they have proper text ")
     def should_be_5_items(self):
         # Assert that there are 5 items in the Left Section are displayed and they have proper text
-        with allure.step("Assert that there are 5 items in the Left Section are displayed and they have proper text "):
-            elements_text = list(map(lambda x: self.wait_visible(x).text, BasePageLocators.LIST_BUTTONS_LEFT_BAR))
-            return elements_text
+        elements_text = list(map(lambda x: self.wait_visible(x).text, BasePageLocators.LIST_BUTTONS_LEFT_BAR))
+        return elements_text
