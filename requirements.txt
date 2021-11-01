@@ -2,3 +2,4 @@ pytest==6.2.5
 allure-pytest==2.9.45
 selenium==4.0.0
 delayed-assert==0.3.6
+pytest-xdist==2.4.0
