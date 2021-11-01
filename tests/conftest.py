@@ -1,6 +1,6 @@
 import pytest
 from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options
+from users import REMOTE_CAPABILITIES
 import allure
 
 
@@ -23,16 +23,7 @@ def browser(request):
     if driver_type == "local":
         browser = webdriver.Chrome()
     elif driver_type == "remote":
-        capabilities = {
-            "browserName": "chrome",
-            "browserVersion": "95",
-            "screenResolution": "1920x1080x24",
-            "selenoid:options": {
-                "enableVNC": True,
-                "enableVideo": False
-            }
-
-        }
+        capabilities = REMOTE_CAPABILITIES
 
         browser = webdriver.Remote(
             command_executor="http://localhost:4444/wd/hub", desired_capabilities=capabilities)

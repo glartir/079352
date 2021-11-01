@@ -58,15 +58,14 @@ class BasePage:
         Select(dropdown).select_by_visible_text(text)
         return dropdown
 
-    @allure.step("Assert that there are 4 items on the header section are displayed and they have proper texts "):
+    @allure.step("Assert that there are 4 items on the header section are displayed and they have proper texts ")
     def should_be_right_header(self):
         # Assert that there are 4 items on the header section are displayed and they have proper texts
-
-            text_home = self.wait_clickable(BasePageLocators.BUTTON_HEADER_HOME).text
-            text_contact = self.wait_clickable(BasePageLocators.BUTTON_HEADER_CONTACT).text
-            text_metal = self.wait_clickable(BasePageLocators.BUTTON_HEADER_METALS_COLORS).text
-            text_service = self.wait_clickable(BasePageLocators.DROPDOWN_HEADER_SERVICE).text
-            return [text_home, text_metal, text_contact, text_service]
+        text_home = self.wait_clickable(BasePageLocators.BUTTON_HEADER_HOME).text
+        text_contact = self.wait_clickable(BasePageLocators.BUTTON_HEADER_CONTACT).text
+        text_metal = self.wait_clickable(BasePageLocators.BUTTON_HEADER_METALS_COLORS).text
+        text_service = self.wait_clickable(BasePageLocators.DROPDOWN_HEADER_SERVICE).text
+        return [text_home, text_metal, text_contact, text_service]
 
     @allure.step("Perform login ")
     def should_be_login(self, login, password):
