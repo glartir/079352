@@ -13,18 +13,17 @@ class BasePage:
     def __init__(self, browser):
         self.browser = browser
 
+    @allure.step("Open test site by URL ")
     def open_url(self, url):
-        with allure.step("Open test site by URL "):
-            self.browser.get(url)
+        self.browser.get(url)
 
+    @allure.step("Assert Browser title ")
     def wait_title(self, title):
-
         # Assert Browser title
-        with allure.step("Assert Browser title "):
-            try:
-                WebDriverWait(self.browser, timeout=TIMEOUT).until(EC.title_is(title))
-            except TimeoutException:
-                raise AssertionError("Wrong title")
+        try:
+            WebDriverWait(self.browser, timeout=TIMEOUT).until(EC.title_is(title))
+        except TimeoutException:
+            raise AssertionError("Wrong title")
 
     def wait_clickable(self, locator):
         try:
@@ -49,10 +48,10 @@ class BasePage:
         elements = WebDriverWait(self.browser, timeout=TIMEOUT).until(EC.visibility_of_all_elements_located(locator))
         return elements
 
+    @allure.step("Switch to original window back ")
     def switch_to_main_frame(self):
         # Switch to original window back
-        with allure.step("Switch to original window back "):
-            self.browser.switch_to.default_content()
+        self.browser.switch_to.default_content()
 
     def set_dropdown_html(self, dropdown_locator, text):
         dropdown = self.wait_clickable(dropdown_locator)
