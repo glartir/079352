@@ -21,7 +21,6 @@ Check values
     @{values}  Create List  ${water}  ${wind}  ${drop}  ${selen}
     [Return]  @{values}
 
-##   Checkbox Should Be Selected  ${CHECKBOX_WATER}.Get Webelement  xpath:./input
 Check log values
     ${logwindow}  Get Webelements  ${LOG_ENTRIES}
     ${text_color}  Get Text  ${logwindow}[0]

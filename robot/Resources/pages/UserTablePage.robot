@@ -41,4 +41,4 @@ Should Be Equal with row
     [Arguments]  ${id}  ${nickname}  ${description}  @{row}
     log  ${row}
     @{text_1}  Get Texts Rows  ${id}  ${nickname}  ${description}
-    Should Be Equal As Strings  @{text_1}  @{row}
+    Lists Should be Equal  @{text_1}  @{row}

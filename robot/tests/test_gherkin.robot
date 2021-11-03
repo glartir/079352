@@ -10,9 +10,9 @@ Resource  ../Resources/pages/base.robot
 Test Teardown  Finish TestCase
 *** Variables ***
 ${url}  https://jdi-testing.github.io/jdi-light/index.html
-@{NUMBERS_TABLE}  1 2 3 4 5 6
-@{USERNAMES_TABLE}  Roman  Sergey Ivan  Vladzimir  Helen Bennett  Yoshi Tannamari  Giovanni Rovelli
-@{DESCRIPTIONS_TABLE}  Wolverine  Spider Man  Punisher  Captain America some description  Cyclope some description  Hulksome description
+@{NUMBERS_TABLE}  1  2  3  4  5  6
+@{USERNAMES_TABLE}  Roman  Sergey Ivan  Vladzimir  Helen Bennett  Yoshi Tannamuri  Giovanni Rovelli
+@{DESCRIPTIONS_TABLE}  Wolverine  Spider Man  Punisher  Captain America\nsome description  Cyclope\nsome description  Hulk\nsome description
 *** Keywords ***
 I open JDI GitHub site
     Start TestCase
@@ -41,20 +41,24 @@ I select 'vip' checkbox for "Sergey Ivan"
     Should Be Equal As Strings  ${target}  ${text_log}
 
 User table should contain following values
-    [Arguments]  ${numbers_target}  ${name_target}  ${description_targer}
-    log   ${numbers_target}[3]
+    [Arguments]  &{table}
+    log   ${table}[number][2]
     @{ids}  Get Numbers Elements
     @{nicknames}  Get Usernames Elements
     @{descriptions}  Get Descriptions Elements
-#    @{text_1}  Get Texts Rows  ${ids}[0]  ${nicknames}[0]  ${descriptions}[0]
-#    Should Be Equal With Row  ${ids}[0]  ${nicknames}[0]  ${descriptions}[0]  [1  Roman  Wolverine]
-#     Should Be Equal With Row  ${ids}[0]  ${nicknames}[0]  ${descriptions}[0]  ['1', 'Roman', 'Wolverine']
-#     Should Be Equal With Row  ${ids}[0]  ${nicknames}[0]  ${descriptions}[0]  ['1', 'Roman', 'Wolverine']
-#     Should Be Equal With Row  ${ids}[0]  ${nicknames}[0]  ${descriptions}[0]  ['1', 'Roman', 'Wolverine']
-#     Should Be Equal With Row  ${ids}[0]  ${nicknames}[0]  ${descriptions}[0]  ['1', 'Roman', 'Wolverine']
-#     Should Be Equal With Row  ${ids}[0]  ${nicknames}[0]  ${descriptions}[0]  ['1', 'Roman', 'Wolverine']
+    ${text_ids}  Get Texts From List Elements  @{ids}
+    ${text_nicknames}  Get Texts From List Elements  @{nicknames}
+    ${text_descriptions}  Get Texts From List Elements  @{descriptions}
+    ${table_fact}  Create Dictionary  number  ${text_ids}  user  ${text_nicknames}  description  ${text_descriptions}
+    log  ${table_fact}
+    Dictionaries Should Be Equal  ${table_fact}  ${table}
 
-#     log  ${text_1}
+droplist should contain values in column Type for user Roman
+    [Arguments]  @{droplist}
+    @{elements}  Get Web Elements  ${DROPDOWN_VALUES_ROMAN}
+    log  ${elements}
+    ${droplist_fact}  Get Texts From List Elements  @{elements}
+    Lists Should Be Equal  ${droplist}  ${droplist_fact}
 
 *** Test Cases ***
 User Table Page test
@@ -67,9 +71,8 @@ User Table Page test
     And 6 Usernames should be displayed on Users Table on User Table Page
     And 6 Description texts under images should be displayed on Users Table on User Table Page
     And 6 checkboxes should be displayed on Users Table on User Table Page
-    And User table should contain following values  ${NUMBERS_TABLE}  ${USERNAMES_TABLE}  ${DESCRIPTIONS_TABLE}
+    And User table should contain following values  number=${NUMBERS_TABLE}  user=${USERNAMES_TABLE}  description=${DESCRIPTIONS_TABLE}
 
-#[1,2,3,4,5,6]  [Roman,Sergey Ivan,Vladzimir,Helen Bennett, Yoshi Tannamuri,Giovanni Rovelli]  [Wolverine,Spider Man,Punisher,Captain America some description,Cyclope some description,Hulksome description ]
 #        | =Number= | =User= | =Description= |
 #        | _1_ | Roman | Wolverine |
 #        | _2_ | Sergey Ivan | Spider Man |
@@ -77,6 +80,14 @@ User Table Page test
 #        | _4_ | Helen Bennett | Captain America some description |
 #        | _5_ | Yoshi Tannamuri | Cyclope some description |
 #        | _6_ | Giovanni Rovelli | Hulksome description |
+    And droplist should contain values in column Type for user Roman  Admin  User  Manager
+         #| Dropdown Values |
+         #
+         #| Admin           |
+         #
+         #| User            |
+         #
+         #| Manager         |
 
 Exercise3
     Given I open JDI GitHub site

@@ -12,6 +12,9 @@ Start TestCase
 
 Finish TestCase
     Close Browser
+Open Diff Elements Page
+    Click Element  ${DROPDOWN_HEADER_SERVICE}
+    Click Element  ${BUTTON_DIFFERENT_ELEMENTS}
 
 Perform login
     [Arguments]  ${name}  ${password}
@@ -39,6 +42,15 @@ Get chain elements
     @{element}  Get Webelements  ${locator_list}
     [Return]  @{element}
 
+Get Texts From List Elements
+    [Arguments]  @{list}
+    ${new_list}  Create List
+    FOR  ${element}  IN  @{list}
+        ${new_element}  Get Text  ${element}
+        log  ${new_element}
+        Append to list  ${new_list}  ${new_element}
+    END
+    [Return]  @{new_list}
 
 
 
