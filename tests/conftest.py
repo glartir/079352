@@ -4,11 +4,6 @@ from users import REMOTE_CAPABILITIES
 import allure
 
 
-def pytest_addoption(parser):
-    parser.addoption('--driver_type', action='store', default='local',
-                     help="Choose type of driver: local or remote")
-
-
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
@@ -40,6 +35,8 @@ def browser(request):
 
 
 def pytest_addoption(parser):
+    parser.addoption('--driver_type', action='store', default='local',
+                     help="Choose type of driver: local or remote")
     parser.addoption('--first_arg', action='store', default=10)
     parser.addoption('--second_arg', action='store', default=20)
     parser.addoption('--result', action='store', default=200)
