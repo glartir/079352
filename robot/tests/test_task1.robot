@@ -10,19 +10,19 @@ Resource  ../Resources/pages/base.robot
 Test Setup  Start TestCase
 Test Teardown  Finish TestCase
 
-*** Variables ***
 *** Keywords ***
+
 Assert log values
     @{answer}  Check log values
     ${colors}  Split And Slice  ${answer}[0]  1
     @{metal}  Split And Slice  ${answer}[1]  1
     @{wind}  Split And Slice  ${answer}[2]  1
     @{water}  Split And Slice  ${answer}[3]  1
-
     Should Be Equal As Strings  ${metal}  ['metal:', 'value', 'changed', 'to', 'Selen']
     Should Be Equal As Strings  ${wind}  ['Wind:', 'condition', 'changed', 'to', 'true']
     Should Be Equal As Strings  ${water}  ['Water:', 'condition', 'changed', 'to', 'true']
     Should Be Equal As Strings  ${colors}  ['Colors:', 'value', 'changed', 'to', 'Yellow']
+
 Assert Values
     @{answer}  Check values
     Assert Texts  @{answer}
@@ -39,6 +39,7 @@ Assert Texts
     Should Be Equal As Strings  ${wind}  Wind
     Should Be Equal As Strings  ${selen}  Selen
     Should Be Equal As Strings  ${drop}  Yellow
+
 Assert status
     [Arguments]  @{answer}
     ${water_status}  Get Chain Element  ${CHECKBOX_WATER}  xpath:./input
@@ -58,4 +59,3 @@ Test exercise1
     Select color in dropdwown  Yellow
     Assert Values
     Assert Log Values
-

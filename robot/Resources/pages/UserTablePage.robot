@@ -1,24 +1,29 @@
 *** Settings ***
 Library  SeleniumLibrary
 Variables  ./locators.py
-*** Variables ***
 
 *** Keywords ***
+
 Get Dropdowns elements
     @{dropdowns}  Get WebElements  ${DROPDOWN_USERS}
     [Return]  @{dropdowns}
+
 Get Descriptions elements
     @{descriptions}  Get WebElements  ${DESCRIPTIONS_USERS}
     [Return]  @{descriptions}
+
 Get checkboxes elements
     @{checkboxes}  Get WebElements  ${CHECKBOXES_USERS}
     [Return]  @{checkboxes}
+
 Get usernames elements
     @{usernames}  Get WebElements  ${NICKNAMES_USERS}
     [Return]  @{usernames}
+
 Get numbers elements
     @{numbers}  Get WebElements  ${NUMBER_ID_USERS}
     [Return]  @{numbers}
+
 Check 6 elements
     [Arguments]  ${locator}
     @{items}  Get WebElements  ${locator}

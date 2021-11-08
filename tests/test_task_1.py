@@ -4,6 +4,8 @@ from delayed_assert import delayed_assert, expect
 from users import LOGIN, PASSWORD, USERNAME, URL
 import allure
 # pytest --alluredir reports test_task_1.py
+# pytest --alluredir reports -n 3 test_task_1.py , for parallel run
+
 
 
 def first_4_steps(browser):

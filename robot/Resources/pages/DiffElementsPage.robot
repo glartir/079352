@@ -5,14 +5,16 @@ Variables  ./locators.py
 
 *** Keywords ***
 Select chekboxes water and wind
-    Click Element  ${CHECKBOX_WATER}
-    Click Element  ${CHECKBOX_WIND}
+    Check and Click  ${CHECKBOX_WATER}
+    Check and Click  ${CHECKBOX_WIND}
+
 Select radio selen
-    Click Element  ${RADIOBUTTON_SELEN}
+    Check and Click  ${RADIOBUTTON_SELEN}
 
 Select color in dropdwown
     [Arguments]  ${color}
     Select From List By Label  ${DROPDOWN_COLORS}  ${color}
+
 Check values
     ${water}  Get WebElement  ${CHECKBOX_WATER}
     ${wind}  Get WebElement  ${CHECKBOX_WIND}
