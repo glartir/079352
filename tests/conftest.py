@@ -21,7 +21,7 @@ def browser(request):
         capabilities = REMOTE_CAPABILITIES
 
         browser = webdriver.Remote(
-            command_executor="http://localhost:4444/wd/hub", desired_capabilities=capabilities)
+            command_executor="http://selenoid:4444/wd/hub", desired_capabilities=capabilities)
     else:
         raise pytest.UsageError("--driver_type should be local or remote")
     browser.maximize_window()
