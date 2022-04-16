@@ -1,0 +1,48 @@
+version: '3'
+
+networks:
+  selenoid:
+    name: selenoid
+services:
+  selenoid:
+    container_name: selenoid
+    image: aerokube/selenoid:latest-release
+    networks:
+      selenoid:
+        aliases:
+          - pikpik
+    volumes:
+      - "/d/python/TestExercise2:/etc/selenoid"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    #      - "/path/to/config/video:/opt/selenoid/video"
+    #      - "/path/to/config/logs:/opt/selenoid/logs"
+    environment:
+      - OVERRIDE_VIDEO_OUTPUT_DIR=/path/to/config/video
+    command: ["-conf", "/etc/selenoid/browsers.json","-container-network", "selenoid" ]
+    ports:
+      - "4444:4444"
+  selenoid-ui:
+    container_name: selenoid-ui
+    image: aerokube/selenoid-ui
+    networks:
+      - selenoid
+    restart: always
+    ports:
+      - "8080:8080"
+    command: [ "--selenoid-uri", "http://selenoid:4444" ]
+  test_runner:
+    build: .
+    image: test_runner
+    container_name: pytest_runner_works
+    networks:
+      - selenoid
+    environment:
+      - ENV=dev
+    volumes:
+      - .:/tests_project
+    working_dir: /tests_project/tests/
+    command: ["pytest","./","--driver_type=remote","-n", "5"]
+# for first run uncoment for download
+#  chrome:
+#    image: selenoid/chrome:99.0
+#    command: ["exit"]
